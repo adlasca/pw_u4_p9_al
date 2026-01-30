@@ -45,7 +45,7 @@ const actualizarPorId = async(id, body) => {
 
 const borrar = async(id) => {
   axios
-    .delete(`localhost:8081/matricula/api/v1.0/estudiantes/${id}`)
+    .delete(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`)
     .then((r) => r.data);
 }
 
