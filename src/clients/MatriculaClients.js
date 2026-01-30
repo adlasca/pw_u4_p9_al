@@ -1,8 +1,7 @@
-/* eslint-disable prettier/prettier */
 import axios from "axios";
 
 const consultarTodos = async() => {
-  const data = axios
+  const data = await axios
     .get("http://localhost:8081/matricula/api/v1.0/estudiantes")
     .then((r) => r.data);
 
@@ -11,7 +10,7 @@ const consultarTodos = async() => {
 };
 
 const consultarPorId = async(id) => {
-  const data = axios
+  const data = await axios
     .get(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`)
     .then((r) => r.data);
   return data;
@@ -23,28 +22,31 @@ const guardar = async(body) => {
     apellido: "Son",
   }*/
 
-  const data = axios
+  const data = await axios
     .post(`http://localhost:8081/matricula/api/v1.0/estudiantes`, body)
     .then((r) => r.data);
   return data;
 };
 
 const actualizar = async(id, body) => {
-  const data = axios
+  const data = await axios
     .put(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`, body)
     .then((r) => r.data);
   return data;
 };
 
-const actualizarPorId = async(id, body) => {
-  const data = axios
-    .patch(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`, body)
-    .then((r) => r.data);
-  return data;
+const actualizarPorId = async (id, body) => {
+  try {
+    const response = await axios.patch(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error en patch:", error);
+    throw error;
+  }
 };
 
 const borrar = async(id) => {
-  axios
+  await axios
     .delete(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`)
     .then((r) => r.data);
 }

@@ -95,7 +95,7 @@
               <td>
                 <strong>{{ item.id }}</strong>
               </td>
-              <td>{{ item.nombre }} {{ item.apellido }}</td>
+              <td>{{ item.nombre}} {{ item.apellido }}</td>
               <td>{{ item.provincia }}</td>
               <td>
                 <span :class="['tag', item.genero]">{{ item.genero }}</span>
@@ -189,7 +189,7 @@ export default {
         // La fachada suele recibir: (id, objetoConDatos)
         await actualizarPorIdFachada(this.id, datosActualizados);
         this.resultadoMensaje = "¡Actualizado con éxito!";
-        this.consultarTodo(); // Refrescar la tabla
+        //this.consultarTodo(); // Refrescar la tabla
       } catch (error) {
         console.error("Error al actualizar:", error.response?.data);
         this.resultadoMensaje =
@@ -239,13 +239,13 @@ export default {
         this.resultadoMensaje = "Enviando actualización...";
 
         // IMPORTANTE: Verifica que los parámetros coincidan con tu fachada (id, objeto)
-        const response = await actualizarPorIdFachada(this.id, objetoActualizar);
+        const response = await actualizarFachada(this.id, objetoActualizar);
 
         console.log("Respuesta del servidor:", response);
         this.resultadoMensaje = "¡Actualización exitosa!";
 
         // Refrescamos la lista para ver los cambios
-        await this.consultarTodo();
+        //await this.consultarTodo();
       } catch (error) {
         console.error("Error capturado:", error);
         this.resultadoMensaje =
