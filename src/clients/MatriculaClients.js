@@ -1,17 +1,19 @@
 import axios from "axios";
+import {login} from "./AuthUser";
+
+const TOKEN= await login();
+const URL = "http://localhost:8081/matricula/api/v1.0/estudiantes";
 
 const consultarTodos = async() => {
-  const data = await axios
-    .get("http://localhost:8081/matricula/api/v1.0/estudiantes")
+  const data = axios
+    .get(URL, {headers:{Authorization:`Bearer ${TOKEN}`}})
     .then((r) => r.data);
-
-    console.log(data);
   return data;
 };
 
 const consultarPorId = async(id) => {
-  const data = await axios
-    .get(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`)
+  const data = axios
+    .get(`${URL}/${id}`, {headers:{Authorization:`Bearer ${TOKEN}`}})
     .then((r) => r.data);
   return data;
 };
@@ -21,33 +23,29 @@ const guardar = async(body) => {
     nombre: "Goku",
     apellido: "Son",
   }*/
-
-  const data = await axios
-    .post(`http://localhost:8081/matricula/api/v1.0/estudiantes`, body)
+  const data = axios
+    .post(URL, body, {headers:{Authorization:`Bearer ${TOKEN}`}})
     .then((r) => r.data);
   return data;
 };
 
 const actualizar = async(id, body) => {
-  const data = await axios
-    .put(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`, body)
+  const data = axios
+    .put(`${URL}/${id}`, body, {headers:{Authorization:`Bearer ${TOKEN}`}})
     .then((r) => r.data);
   return data;
 };
 
-const actualizarPorId = async (id, body) => {
-  try {
-    const response = await axios.patch(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`, body);
-    return response.data;
-  } catch (error) {
-    console.error("Error en patch:", error);
-    throw error;
-  }
+const actualizarPorId = async(id, body) => {
+  const data = axios
+    .patch(`${URL}/${id}`, body, {headers:{Authorization:`Bearer ${TOKEN}`}})
+    .then((r) => r.data);
+  return data;
 };
 
 const borrar = async(id) => {
-  await axios
-    .delete(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`)
+  axios
+    .delete(`${URL}/${id}`, {headers:{Authorization:`Bearer ${TOKEN}`}})
     .then((r) => r.data);
 }
 
