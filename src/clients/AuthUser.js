@@ -1,12 +1,13 @@
-
 import axios from "axios";
-const user="goku"
-const password="123"
-const URL = `http://localhost:8082/auth/token?user=${user}&password=${password}`;
+const URL = `http://localhost:8082/auth/token`;
 
-export const login = async() => {
+const login = async (user, password) => {
     const token = await axios
-        .get(URL)
+        .get(URL, { params: { user, password } })
         .then((r) => r.data.accessToken);
     return token;
+}
+
+export const loginFacade = async (user, password) => {
+    return await login(user, password);
 }

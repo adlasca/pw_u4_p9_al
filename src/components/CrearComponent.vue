@@ -91,6 +91,7 @@ export default {
                 alert("¡Registro exitoso!");
                 this.limpiar();
             } catch (e) {
+                console.log(e);
                 alert("Error de conexión con el servidor.");
             } finally {
                 this.loading = false;
@@ -139,10 +140,10 @@ export default {
 .input-grid {
     display: flex;
     flex-direction: column;
-    text-align: left    ;
+    text-align: left;
     gap: 1.25rem;
     justify-content: center;
-    width: 75%; 
+    width: 75%;
     margin: 0 auto;
 }
 
