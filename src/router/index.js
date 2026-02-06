@@ -6,8 +6,27 @@ import BuscarView from "../views/BuscarView.vue";
 import CrearView from "../views/CrearView.vue";
 import ListarView from "../views/ListarView.vue";
 import ParcialView from "../views/ParcialView.vue";
+import LoginView from "../views/LoginView.vue";
 
 const routes = [
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
+    meta: {
+      requiereAutorizacion: false,
+      esPublica: true,
+    }
+  },
+  {
+    path: "/",
+    name: "home",
+    component: HomeView,
+    meta: {
+      requiereAutorizacion: false,
+      esPublica: true,
+    }
+  },
   {
     path: "/actualizar",
     name: "actualizar",
@@ -78,10 +97,20 @@ Next: Hacia donde se dirige la navegacion,
 router.beforeEach((to,from,next)=>{
   if(to.meta.requiereAutorizacion){
     /*Le envio a una pagina de login */
-    console.log("redirige a login")
+    
+    const estaAutenticado = localStorage.getItem("estaAutenticado");
+    const token = localStorage.getItem("token");
+    if(!estaAutenticado){
+      console.log("redirige a login")
+      next({name: "login"})
+    }else{
+      console.log("sin validaciones")
+      next();
+    }
   }else{
     /*Le dejo sin validaciones*/
     console.log("sin validaciones")
+    next()
   }
 })
 

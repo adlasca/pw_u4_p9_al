@@ -8,6 +8,7 @@
       <router-link to="/buscar">Buscar</router-link>
       <router-link to="/crear">Crear</router-link>
       <router-link to="/parcial">Parcial</router-link>
+      <button class="logout" @click="logout">Cerrar Sesión</button>
     </div>
   </nav>
   <main class="content">
@@ -24,13 +25,12 @@ export default {
   },
   data() {
     return {
-      user: "goten",
-      password: "1234"
+      user: "goku",
+      password: "123"
     };
   },
   async mounted() {
     console.log("mounted");
-    localStorage.setItem("token", await loginFacade(this.user, this.password));
     console.log("Token: ", localStorage.getItem("token"));
   },
   unmounted() {
@@ -38,8 +38,20 @@ export default {
     localStorage.removeItem("token");
     console.log("Token: ", localStorage.getItem("token"));
   },
+  methods:{
+    logout(){
+      localStorage.removeItem("token");
+      localStorage.removeItem("estaAutenticado");
+      this.$router.push({name: "login"});
+    }
+  }
 
 };
+
+/*
+Guardianes: Proteccion de rutas en Vue
+*/
+
 </script>
 
 <style>
@@ -80,6 +92,26 @@ body {
   overflow-x: auto;
   max-width: 100%;
 }
+.logout{
+  padding: 10px 18px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #64748b;
+  border-radius: 8px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.logout:hover {
+  background-color: #ef4444;
+  color: white;
+}
+
+.logout:active {
+  background-color: #ef4444;
+  color: white;
+}
 
 .pestanas a {
   padding: 10px 18px;
@@ -102,4 +134,5 @@ body {
   color: #3b82f6;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
 }
+
 </style>
